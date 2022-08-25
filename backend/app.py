@@ -9,14 +9,18 @@ app.secret_key = 'ThWmYq3t6w9z$C&F)J@NcRfUjXn2r4u7'
 # Create API endpoint for get & post
 @app.route('/', methods=['GET','POST'])
 def get_string():
+    # Post Method
     if request.method == 'POST':
+        # Get Data from front-end
         data = request.get_json()
         try:
+            # Check the valid data
             if len(data) == 1 and ('sudoku_str' in data.keys()):
                 try:
                     if len(data['sudoku_str']) == 89 and len(data['sudoku_str'].split(",")) == 9:
                         sudoku_arr = data['sudoku_str'].split(",")
                         print(sudoku_arr)
+                        # Send 
                         return jsonify({'msg' : 'Successfully Post'})
                     else:
                         raise InvalidInputLength
@@ -27,7 +31,7 @@ def get_string():
         except InvalidPostRequest:
             return jsonify({'msg': 'Invalid Post Request'})
     elif request.method == 'GET':
-        pass
+        return jsonify({'sudoku_str':'String Received'})
 
 # Run the Flask App
 if __name__ == '__main__':
